@@ -1,0 +1,11 @@
+#if(!$context.args.filter)
+#set ($context.args.filter = {})
+#end
+$util.qr($context.args.filter.put("and", [{"state":{"eq":$context.identity.claims.get("state")}}]))
+{
+    "version" : "2017-02-28",
+    "operation" : "Scan",
+    "filter": $util.transform.toDynamoDBFilterExpression($ctx.args.filter),
+    "limit": $util.defaultIfNull(${ctx.args.limit}, 1000),
+    "nextToken": $util.toJson($util.defaultIfNullOrBlank($ctx.args.nextToken, null))
+}

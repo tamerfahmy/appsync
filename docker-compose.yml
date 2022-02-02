@@ -1,0 +1,15 @@
+version: '3'
+services:
+  serverless-dev:
+    build:
+      context: ./
+      dockerfile: ./frontend/Dockerfile
+    volumes:
+      - './frontend:/user/src/app'
+    ports:
+      - 20002:20002 # sls.appsync
+      - 20003:20003 # sls.appsync.ws
+      - 3000:3000 # sls.api-gateway
+      - 8000:8000 # sls.dynamodb.local
+      - 8001:8001 # sls.dynamodb.admin.ui
+      - 4200:4200 # frontend.angular.app.dev
