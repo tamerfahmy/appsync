@@ -1,0 +1,26 @@
+{
+  "app": {
+    "name": "Cities Management"
+  },
+  "menu": {
+    "overview": "Overview",
+    "submit": "Submit Value"
+  },
+  "common":{
+    "last-updated": "Last Updated"
+  },
+  "pages": {
+    "overview": {
+      "title": "Cities Overview",
+      "parking-spaces-title": "Parking Spaces",
+      "parking-spaces-sub": "Parking Spaces details",
+      "air-pollution-title": "Air Pollution",
+      "air-pollution-sub": "Air Pollution details",
+      "photovoltaic-title": "Photovoltaic",
+      "photovoltaic-sub": "Photovoltaic details",
+      "biogas-title": "Bio-Gas",
+      "biogas-sub": "Photovoltaic details",
+      "select-city": "Select City"
+    }
+  }
+}

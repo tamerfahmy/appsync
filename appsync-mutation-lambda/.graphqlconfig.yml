@@ -1,0 +1,18 @@
+# This is the amplify codegen configuration
+projects:
+  Codegen Project:
+    schemaPath: ./schema.graphql
+    includes:
+      - src/graphql/**/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ""
+        docsFilePath: src/graphql/amplify
+        frontend: javascript
+        framework: none
+extensions:
+  amplify:
+    version: 3

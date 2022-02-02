@@ -1,0 +1,187 @@
+service: city-management-dev
+frameworkVersion: ">=2.30.3"
+
+provider:
+  name: aws
+  stage: dev
+  region: "eu-central-1"
+  lambdaHashingVersion: 20201221
+  memorySize: 256 # optional, in MB, default is 1024
+  apiGateway:
+    shouldStartNameWithService: true
+  timeout: 180
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:DescribeStream
+            - dynamodb:GetRecords
+            - dynamodb:GetShardIterator
+            - dynamodb:ListStreams
+            - appsync:GraphQL
+            - appsync:GetGraphqlApi
+            - appsync:ListGraphqlApis
+            - appsync:ListApiKeys
+          Resource: "*"
+
+package:
+  excludeDevDependencies: true
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-appsync-plugin
+  - serverless-plugin-offline-dynamodb-stream
+  - serverless-appsync-simulator # must be written above the Offline-Serverless
+  - serverless-offline
+
+functions:
+  mutation-lambda:
+    handler: ../appsync-mutation-lambda/lambda.handler
+    runtime: nodejs14.x
+    environment:
+      SENSOR_TABLE_NAME: sensor-values
+      DEBUG: true
+      APPSYNC_URL: http://localhost:20002/graphql
+      AWS_REGION: eu-central-1
+  app-info-lambda:
+    handler: ../api-lambda/lambda.handler
+    runtime: nodejs12.x
+    package:
+      include:
+        - node_modules
+        - src
+        - lambda.js
+        - package.json
+        - package-lock.json
+    events:
+      - http:
+          path: public/api/config/props
+          method: get
+          cors: true
+      - http:
+          path: api/config
+          method: get
+          cors: true
+    environment:
+      AppInfo: https://adidas.okta.com/oauth2/default
+      Audience: 0oaef234qMqtQnSeo696
+      APPSYNC_URL: http://localhost:20002/graphql
+      AWS_REGION: eu-central-1
+      NODE_ENV: development
+
+custom:
+  serverless-offline:
+    httpPort: 8080
+    useChildProcesses: true
+  appsync-simulator:
+    stages:
+      - dev
+    port: 20002
+    wsPort: 20003
+    dynamoDb:
+      region: localhost
+      endpoint: "http://localhost:8000"
+
+  appSync:
+    name: smart-city-api
+    schema: ../appsync/schema.graphql
+    authenticationType: OPENID_CONNECT
+    openIdConnectConfig:
+      issuer: https://adidas.okta.com/oauth2/default
+      clientId: 0oaef234qMqtQnSeo696
+    additionalAuthenticationProviders:
+      - authenticationType: AWS_IAM
+    dataSources:
+      - type: AMAZON_DYNAMODB
+        name: sensor_table
+        config:
+          tableName:
+            Ref: sensorsTable # resolves to `sensorsTable`
+      - type: NONE
+        name: real_time_data
+
+    mappingTemplatesLocation: ../appsync/mapping-templates
+    mappingTemplates:
+      - dataSource: sensor_table
+        field: getCity
+        type: Query
+        request: query.default.request.vtl
+        response: query.default.response.vtl
+      - dataSource: real_time_data
+        field: addCity
+        type: Mutation
+        request: mutation.default.request.vtl
+        response: mutation.default.response.vtl
+      - dataSource: real_time_data
+        field: deleteCity
+        type: Mutation
+        request: mutation.default.request.vtl
+        response: mutation.default.response.vtl
+      - dataSource: real_time_data
+        field: updateCity
+        type: Mutation
+        request: mutation.default.request.vtl
+        response: mutation.default.response.vtl
+      - dataSource: real_time_data
+        field: onAddCity
+        type: Subscription
+        request: subscription.default.request.vtl
+        response: subscription.default.response.vtl
+      - dataSource: real_time_data
+        field: onDeleteCity
+        type: Subscription
+        request: subscription.default.request.vtl
+        response: subscription.default.response.vtl
+      - dataSource: real_time_data
+        field: onUpdateCity
+        type: Subscription
+        request: subscription.default.request.vtl
+        response: subscription.default.response.vtl
+
+  dynamodbStream:
+    host: localhost
+    port: 8000
+    region: eu-central-1
+    pollForever: boolean
+    streams:
+      - table: sensor-values
+        functions:
+          - mutation-lambda
+
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+      cors: "*"
+    seed:
+      dev:
+        sources:
+          - table: sensor-values
+            sources: [./src/app/mocks/sensors.json]
+resources:
+  Resources:
+    sensorsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: sensor-values
+        KeySchema:
+          - AttributeName: state
+            KeyType: HASH
+          - AttributeName: city
+            KeyType: RANGE
+        AttributeDefinitions:
+          - AttributeName: state
+            AttributeType: S
+          - AttributeName: city
+            AttributeType: S
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+

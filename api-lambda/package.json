@@ -1,0 +1,39 @@
+{
+  "name": "api-lambda",
+  "version": "1.0.0",
+  "main": "local.js",
+  "scripts": {
+    "start": "node local.js",
+    "test": "jest --forceExit --maxWorkers=1 --reporters=default --reporters=jest-junit",
+    "build": "npm run test && grunt zip"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "serverless-http": "^2.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "jest-junit": {
+    "outputDirectory": "dist/test_reports",
+    "outputName": "jest-junit.xml"
+  },
+  "devDependencies": {
+    "grunt": "^1.4.1",
+    "grunt-zip": "^0.18.2",
+    "jest": "^27.4.7",
+    "jest-junit": "^13.0.0",
+    "nodemon": "^2.0.15",
+    "serverless": "^3.0.1",
+    "supertest": "^6.2.2"
+  }
+}

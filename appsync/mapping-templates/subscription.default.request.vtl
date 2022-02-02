@@ -1,0 +1,8 @@
+#if($context.identity.claims.get("state") != ${context.arguments.state})
+    $utils.unauthorized()
+#else
+{
+    "version": "2017-02-28",
+    "payload": $util.toJson($context.args)
+}
+#end

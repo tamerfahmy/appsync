@@ -1,0 +1,38 @@
+[
+  {
+    "state": "bayern",
+    "city": "Munich",
+    "parking_spaces": 80,
+    "air_pollution": 40,
+    "photovoltaic": 60,
+    "biogas": 70,
+    "datetime_utc": "2022-01-24T10:58:25.845"
+  },
+  {
+    "state": "bayern",
+    "city": "Nuremberg",
+    "parking_spaces": 50,
+    "air_pollution": 25,
+    "photovoltaic": 80,
+    "biogas": 50,
+    "datetime_utc": "2022-01-24T10:58:25.845"
+  },
+  {
+    "state": "bayern",
+    "city": "Erlangen",
+    "parking_spaces": 90,
+    "air_pollution": 15,
+    "photovoltaic": 10,
+    "biogas": 20,
+    "datetime_utc": "2022-01-24T10:58:25.845"
+  },
+  {
+    "state": "berlin",
+    "city": "Berlin",
+    "parking_spaces": 20,
+    "air_pollution": 11,
+    "photovoltaic": 1,
+    "biogas": 5,
+    "datetime_utc": "2022-01-24T10:58:25.845"
+  }
+]

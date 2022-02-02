@@ -1,0 +1,8 @@
+{
+  "props": {
+    "jwtAud": "0oa5d6sdexqaZAMYg0i7"
+  },
+  "config": {
+    "appSyncUrl": "http://localhost:20002/graphql"
+  }
+}

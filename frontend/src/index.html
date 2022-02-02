@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cities Management</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <script src="https://static.eu1.mindsphere.io/osbar/v4/js/main.min.js"></script>
+
+  <!-- MindSphere Web Components from CDN -->
+  <script id="mdsp-webcomponents-loader" type="text/javascript"
+    src="https://static.eu1.mindsphere.io/webcomponents/v1/index.js"></script>
+
+  <!-- MindSphere Style Sheet from CDN -->
+  <link rel="stylesheet" href="https://static.eu1.mindsphere.io/mdsp-css/v1.5.0/css/mdsp-css.min.css" />
+
+  <script>
+    if (global === undefined) {
+      var global = window;
+    }
+  </script>
+</head>
+<body >
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div class="mdsp mdsp-defaults" id="_mdspcontent">
+    <app-root></app-root>
+  </div>
+
+  <!-- Main app markup goes here -->
+  <script>
+    _mdsp.init({
+      appId: "_mdspcontent",
+      appInfoPath: "assets/app-info.json"
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+// angular-gauge styles
+/* ------ Default Style ---------- */
+mwl-gauge {
+  margin-bottom: -150px;
+}
+mwl-gauge > .gauge > .dial {
+  stroke: #02989f;
+  stroke-width: 10;
+}
+mwl-gauge > .gauge > .value {
+  stroke: black;
+  stroke-dasharray: none;
+  stroke-width: 13;
+}
+mwl-gauge > .gauge > .value-text {
+  fill: black;
+}

@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="row" style="padding-bottom: 20px;">
+    <div class="col-12">
+      <div class="card card--centered" style="min-height: 150px !important;">
+        <div class="card__header">
+          <h3 class="card__title">
+            {{'pages.overview.select-city' | translate}}
+          </h3>
+        </div>
+        <div class="card__content">
+          <p-dropdown [options]="getCities()" [(ngModel)]="selectedCityVal" optionLabel="name" (onChange)="selectedCityChanged($event)"></p-dropdown>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+  <div class="col-3">
+    <div class="card card--centered">
+      <div class="card__header">
+        <h3 class="card__title">
+          {{'pages.overview.parking-spaces-title' | translate}}
+        </h3>
+        <p class="card__subline">
+          {{'pages.overview.parking-spaces-sub' | translate}}
+        </p>
+      </div>
+      <div class="card__content">
+        <mwl-gauge [max]="100" [dialStartAngle]="-90" [dialEndAngle]="-90.001" [value]="selectedCity?.parking_spaces" [animated]="true"
+          [animationDuration]="2">
+        </mwl-gauge>
+      </div>
+      <div class="card__footer blockquote-footer">
+        {{'common.last-updated' | translate}}: {{selectedCity?.datetime_utc}}
+      </div>
+    </div>
+
+  </div>
+  <div class="col-3">
+    <div class="card card--centered">
+      <div class="card__header">
+        <h3 class="card__title">
+          {{'pages.overview.air-pollution-title' | translate}}
+        </h3>
+        <p class="card__subline">
+          {{'pages.overview.air-pollution-sub' | translate}}
+        </p>
+      </div>
+      <div class="card__content">
+        <mwl-gauge [max]="100" [dialStartAngle]="-90" [dialEndAngle]="-90.001" [value]="selectedCity?.air_pollution"
+          [animated]="true" [animationDuration]="2">
+        </mwl-gauge>
+      </div>
+      <div class="card__footer blockquote-footer">
+        {{'common.last-updated' | translate}}: {{selectedCity?.datetime_utc}}
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="card card--centered">
+      <div class="card__header">
+        <h3 class="card__title">
+          {{'pages.overview.photovoltaic-title' | translate}}
+        </h3>
+        <p class="card__subline">
+          {{'pages.overview.photovoltaic-sub' | translate}}
+        </p>
+      </div>
+      <div class="card__content">
+        <mwl-gauge [max]="100" [dialStartAngle]="-90" [dialEndAngle]="-90.001" [value]="selectedCity?.photovoltaic"
+          [animated]="true" [animationDuration]="2">
+        </mwl-gauge>
+      </div>
+      <div class="card__footer blockquote-footer">
+        {{'common.last-updated' | translate}}: {{selectedCity?.datetime_utc}}
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="card card--centered">
+      <div class="card__header">
+        <h3 class="card__title">
+          {{'pages.overview.biogas-title' | translate}}
+        </h3>
+        <p class="card__subline">
+          {{'pages.overview.biogas-sub' | translate}}
+        </p>
+      </div>
+      <div class="card__content">
+        <mwl-gauge [max]="100" [dialStartAngle]="-90" [dialEndAngle]="-90.001" [value]="selectedCity?.biogas"
+          [animated]="true" [animationDuration]="2">
+        </mwl-gauge>
+      </div>
+      <div class="card__footer blockquote-footer">
+        {{'common.last-updated' | translate}}: {{selectedCity?.datetime_utc}}
+      </div>
+    </div>
+  </div>
+</div></div>
+

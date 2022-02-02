@@ -1,0 +1,21 @@
+{
+  "displayName": "Cities Management",
+  "appVersion": "1.0.0",
+  "appCopyright": "© Siemens 2022",
+  "links": {
+    "default": [
+      {
+        "type": "WWW",
+        "name": "DEV Information",
+        "value": "https://github.com/tamerfahmy/appsync"
+      }
+    ],
+    "de": [
+      {
+        "type": "WWW",
+        "name": "Entwicklungs-Information",
+        "value": "https://github.com/tamerfahmy/appsync"
+      }
+    ]
+  }
+}

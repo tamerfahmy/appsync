@@ -1,0 +1,118 @@
+type Mutation @aws_iam {
+  #   Put a single City of type 'City'.
+  addCity(city: CityInput!): City
+  #   update a single City of type 'City'.
+  updateCity(city: CityInput!): City
+  #   delete a single City of type 'City'.
+  deleteCity(city: CityInput!): City
+}
+
+type Query @aws_iam @aws_oidc {
+  #   Get Cities
+  getCity(
+    filter: CityFilterInput
+    limit: Int
+    nextToken: String
+  ): CityConnection
+}
+
+type Subscription @aws_iam @aws_oidc {
+  #   Informs subscribers on adding new single/ multiple City(s)
+  onAddCity(state: String!): City @aws_subscribe(mutations: ["addCity"])
+  #   Informs subscribers on updating new single/ multiple City(s)
+  onUpdateCity(state: String!): City @aws_subscribe(mutations: ["updateCity"])
+  #   Informs subscribers on deleting new single/ multiple City(s)
+  onDeleteCity(state: String!): City @aws_subscribe(mutations: ["deleteCity"])
+}
+
+# City value type
+type City @aws_iam @aws_oidc {
+  #   Key attributes. Changing these may result in unexpected behavior.
+  state: String
+  city: String
+  #   Add additional non-key attributes below.
+  parking_spaces: Int
+  air_pollution: Float
+  photovoltaic: Float
+  biogas: Float
+  datetime_utc: String
+}
+
+#   A type for paging when querying too many Cities
+type CityConnection @aws_iam @aws_oidc {
+  #   The City items
+  items: [City]
+  #   A token to fetch next elements
+  nextToken: String
+}
+
+input CityFilterInput {
+  #   Key attributes. Changing these may result in unexpected behavior.
+  state: StringFilterInput
+  city: StringFilterInput
+  #   Add additional non-key attributes below.
+  parking_spaces: IntFilterInput
+  air_pollution: FloatFilterInput
+  photovoltaic: FloatFilterInput
+  biogas: FloatFilterInput
+  datetime_utc: StringFilterInput
+}
+
+# City value input
+input CityInput {
+  #   Key attributes. Changing these may result in unexpected behavior.
+  state: String!
+  city: String!
+  #   Add additional non-key attributes below.
+  parking_spaces: Int
+  air_pollution: Float
+  photovoltaic: Float
+  biogas: Float
+  datetime_utc: String
+}
+
+#   Input type to apply float filters
+input FloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+#   Input type to apply int filters
+input IntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+#   Input type to apply string filters
+input StringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}

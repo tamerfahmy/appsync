@@ -1,0 +1,26 @@
+  <div class="appWrapper">
+
+    <div class="appWrapper__regions has-appBar appWrapper__regions--pushLayout">
+      <section class="mainRegion">
+        <div id="main" class="mdsp mdsp-defaults forcecontainer">
+          <!-- <button *ngIf="!isAuthenticated" (click)="oktaAuth.login('/')"> Login </button>
+          <button *ngIf="isAuthenticated" (click)="oktaAuth.logout()"> Logout </button> -->
+          <router-outlet></router-outlet>
+        </div>
+      </section>
+    </div>
+    <ul class="appWrapper__appBar">
+      <li class="appBar__item" [routerLinkActive]="['is-activated']">
+        <a href="#" [routerLink]="['/overview']">
+          <span class="iconMdsp dashboard" aria-hidden="true"></span>
+          <span class="item__title">Dashboard</span>
+        </a>
+      </li>
+      <li class="appBar__item is-disabled" [routerLinkActive]="['is-activated']">
+        <a href="#" [routerLink]="['/submit']">
+          <span class="iconMdsp addCircle" aria-hidden="true"></span>
+          <span class="item__title">Submit Value</span>
+        </a>
+      </li>
+    </ul>
+  </div>
