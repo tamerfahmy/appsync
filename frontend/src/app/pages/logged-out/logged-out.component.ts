@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OktaAuthService } from 'src/app/services/okta-auth.service';
 
 @Component({
   selector: 'app-logged-out',
@@ -6,11 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./logged-out.component.scss']
 })
 export class LoggedOutComponent implements OnInit {
-  constructor() {
+  constructor(private okta: OktaAuthService) {
 
   }
 
   ngOnInit(): void {
-
   }
 }

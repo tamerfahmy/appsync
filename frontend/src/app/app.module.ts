@@ -49,7 +49,6 @@ import { UserService } from './services/user.service';
     MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     UserService,
-    OktaAuthService
   ],
   bootstrap: [AppComponent]
 })

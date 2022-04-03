@@ -3,7 +3,7 @@ const { AWSAppSyncClient } = require('aws-appsync');
 const appSyncHelper = require('./appsync-helper');
 const debug = require('./debugger');
 
-AWS.config.update({ region: process.env.REGION, credentials: new AWS.Credentials(process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY, process.env.AWS_SESSION_TOKEN) });
+AWS.config.update({ region: process.env.AWS_REGION, credentials: new AWS.Credentials(process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY, process.env.AWS_SESSION_TOKEN) });
 const credentials = AWS.config.credentials;
 
 /**
@@ -14,13 +14,18 @@ const credentials = AWS.config.credentials;
 const app = async (event, context, callback) => {
     debug("######## new event ########");
     debug("Records count ", event.Records.length);
+    debug("######## new event ########");
     let mutationPromises = [];
     // creating appsync client
-    const graphqlClient = new AWSAppSyncClient({ url: process.env.APPSYNC_URL, region: process.env.AWS_REGION, auth: { type: 'AWS_IAM', credentials: credentials }, disableOffline: true });
+    const graphqlClient = new AWSAppSyncClient({ url: process.env.APPSYNC_URL, region: process.env.AWS_REGION, auth: { type: 'API_KEY', apiKey: process.env.API_KEY }, disableOffline: true });
     debug('appSync client created');
     // loop on affected db records
     for (const record of event.Records) {
-        debug("######## new record ########");
+        debug('REGION',process.env.REGION);
+        debug('APPSYNC_URL',process.env.APPSYNC_URL);
+        debug('AWS_REGION',process.env.AWS_REGION);
+        debug('AWS_ACCESS_KEY_ID',process.env.AWS_ACCESS_KEY_ID);
+        debug('AWS_SECRET_ACCESS_KEY',process.env.AWS_SECRET_ACCESS_KEY);
         try {
             // get dynamodb table name from record eventSourceArn
             const ddbARN = record.eventSourceARN;

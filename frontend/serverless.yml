@@ -13,16 +13,22 @@ provider:
   iam:
     role:
       statements:
-        - Effect: Allow
+        - Effect: 'Allow'
           Action:
-            - dynamodb:DescribeStream
-            - dynamodb:GetRecords
-            - dynamodb:GetShardIterator
-            - dynamodb:ListStreams
-            - appsync:GraphQL
-            - appsync:GetGraphqlApi
-            - appsync:ListGraphqlApis
-            - appsync:ListApiKeys
+            - 'dynamodb:DescribeStream'
+            - 'dynamodb:GetRecords'
+            - 'dynamodb:GetShardIterator'
+            - 'dynamodb:ListStreams'
+            - 'appsync:GraphQL'
+            - 'appsync:GetGraphqlApi'
+            - 'appsync:ListGraphqlApis'
+            - 'appsync:ListApiKeys'
+            - 'dynamodb:Query'
+            - 'dynamodb:Scan'
+            - 'dynamodb:GetItem'
+            - 'dynamodb:PutItem'
+            - 'dynamodb:DeleteItem'
+            - 'lambda:*'
           Resource: "*"
 
 package:
@@ -44,6 +50,7 @@ functions:
       DEBUG: true
       APPSYNC_URL: http://localhost:20002/graphql
       AWS_REGION: eu-central-1
+      API_KEY: '0123456789'
   app-info-lambda:
     handler: ../api-lambda/lambda.handler
     runtime: nodejs12.x
@@ -64,23 +71,23 @@ functions:
           method: get
           cors: true
     environment:
-      AppInfo: https://adidas.okta.com/oauth2/default
-      Audience: 0oaef234qMqtQnSeo696
+      AppInfo: https://trial-4228776.okta.com/oauth2/default
+      Audience: 0oapppxxlHhGzUb8n696
       APPSYNC_URL: http://localhost:20002/graphql
       AWS_REGION: eu-central-1
       NODE_ENV: development
 
 custom:
   serverless-offline:
-    httpPort: 8080
     useChildProcesses: true
+    httpPort: 8080
   appsync-simulator:
     stages:
       - dev
     port: 20002
     wsPort: 20003
     dynamoDb:
-      region: localhost
+      region: eu-central-1
       endpoint: "http://localhost:8000"
 
   appSync:
@@ -88,10 +95,10 @@ custom:
     schema: ../appsync/schema.graphql
     authenticationType: OPENID_CONNECT
     openIdConnectConfig:
-      issuer: https://adidas.okta.com/oauth2/default
-      clientId: 0oaef234qMqtQnSeo696
+      issuer: https://trial-4228776.okta.com/oauth2/default
+      clientId: 0oapppxxlHhGzUb8n696
     additionalAuthenticationProviders:
-      - authenticationType: AWS_IAM
+      - authenticationType: API_KEY
     dataSources:
       - type: AMAZON_DYNAMODB
         name: sensor_table

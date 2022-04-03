@@ -30,7 +30,9 @@ function executeMutation(graphqlClient, ddbTable, eventName, jsonItem) {
             // promise of sending mutation to appsync
             console.log(mutation);
             console.log(mutationVariable);
-            return graphqlClient.mutate({ mutation, variables: mutationVariable });
+            
+            return graphqlClient.mutate({ mutation: mutation, variables: mutationVariable, fetchPolicy: 'no-cache' });
+            return null;
         }
     } catch (err) {
         console.log("Error while trying to execute appsync mutation", err);
@@ -54,7 +56,7 @@ function resolveMutation(ddbTable, eventName) {
                         mutation = Mutation.addCity;
                         break;
                     case "MODIFY":
-                        mutation = Mutation.updateCity;
+                        mutation = "\n  mutation UpdateCity($city: CityInput!) {\n    updateCity(city: $city) {\n      city\n    }\n  }\n";;
                         break;
                     case "REMOVE":
                         mutation = Mutation.deleteCity;

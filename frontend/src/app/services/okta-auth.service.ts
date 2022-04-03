@@ -13,8 +13,8 @@ export class OktaAuthService {
   LOGOUT_REDIRECT_URI = 'http://localhost:4200/loggedout';
 
   oktaAuth = new OktaAuth({
-    clientId: '0oaef234qMqtQnSeo696',
-    issuer: 'https://adidas.okta.com/oauth2/default',
+    clientId: '0oapppxxlHhGzUb8n696',
+    issuer: 'https://trial-4228776.okta.com/oauth2/default',
     redirectUri: this.LOGIN_REDIRECT_URI,
     pkce: true
   });
@@ -27,6 +27,7 @@ export class OktaAuthService {
       this.observer = observer;
       this.isAuthenticated().then(async val => {
         await this.getIdToken().then(token => {
+          console.log(token)
           this.userService.userToken = token.idToken;
         });
         observer.next(val);

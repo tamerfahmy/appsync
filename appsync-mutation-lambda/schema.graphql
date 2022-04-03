@@ -1,4 +1,4 @@
-type Mutation @aws_iam {
+type Mutation @aws_iam @aws_oidc {
   #   Put a single City of type 'City'.
   addCity(city: CityInput!): City
   #   update a single City of type 'City'.

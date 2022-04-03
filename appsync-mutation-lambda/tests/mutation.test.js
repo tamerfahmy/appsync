@@ -18,16 +18,16 @@ describe('Resolve AppSync Mutations', function () {
 
   it("Should return the add sensor value mutation when table name is sensor_value and dynamodb event name is INSERT", () => {
     const actualMutation = appSyncHelper.resolveMutation("sensor_values", "INSERT");
-    expect(actualMutation).toEqual(Mutation.addSensor);
+    expect(actualMutation).toEqual(Mutation.addCity);
   });
 
   it("Should return the update sensor value mutation when table name is sensor_value and dynamodb event name is MODIFY", () => {
     const actualMutation = appSyncHelper.resolveMutation("sensor_values", "MODIFY");
-    expect(actualMutation).toEqual(Mutation.updateSensor);
+    expect(actualMutation).toEqual(Mutation.updateCity);
   });
 
   it("Should return the delete sensor value mutation when table name is sensor_value and dynamodb event name is REMOVE", () => {
     const actualMutation = appSyncHelper.resolveMutation("sensor_values", "REMOVE");
-    expect(actualMutation).toEqual(Mutation.deleteSensor);
+    expect(actualMutation).toEqual(Mutation.deleteCity);
   });
 });

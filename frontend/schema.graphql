@@ -1,49 +1,50 @@
-type Mutation @aws_iam {
+type Mutation @aws_iam @aws_oidc @aws_api_key {
   #   Put a single City of type 'City'.
-  addCity(city: CityInput!): City
+  addCity(city: CityInput!): City @aws_api_key
   #   update a single City of type 'City'.
-  updateCity(city: CityInput!): City
+  updateCity(city: CityInput!): City @aws_api_key
   #   delete a single City of type 'City'.
-  deleteCity(city: CityInput!): City
+  deleteCity(city: CityInput!): City @aws_api_key
 }
 
-type Query @aws_iam @aws_oidc {
+type Query @aws_iam @aws_oidc @aws_api_key {
   #   Get Cities
   getCity(
     filter: CityFilterInput
     limit: Int
     nextToken: String
   ): CityConnection
+  @aws_api_key
 }
 
-type Subscription @aws_iam @aws_oidc {
+type Subscription @aws_iam @aws_oidc @aws_api_key {
   #   Informs subscribers on adding new single/ multiple City(s)
-  onAddCity(state: String!): City @aws_subscribe(mutations: ["addCity"])
+  onAddCity(state: String!): City @aws_subscribe(mutations: ["addCity"]) @aws_api_key
   #   Informs subscribers on updating new single/ multiple City(s)
-  onUpdateCity(state: String!): City @aws_subscribe(mutations: ["updateCity"])
+  onUpdateCity(state: String!): City @aws_subscribe(mutations: ["updateCity"]) @aws_api_key
   #   Informs subscribers on deleting new single/ multiple City(s)
-  onDeleteCity(state: String!): City @aws_subscribe(mutations: ["deleteCity"])
+  onDeleteCity(state: String!): City @aws_subscribe(mutations: ["deleteCity"]) @aws_api_key
 }
 
 # City value type
-type City @aws_iam @aws_oidc {
+type City @aws_iam @aws_oidc @aws_api_key {
   #   Key attributes. Changing these may result in unexpected behavior.
-  state: String
+  state: String @aws_api_key
   city: String
   #   Add additional non-key attributes below.
-  parking_spaces: Int
-  air_pollution: Float
-  photovoltaic: Float
-  biogas: Float
-  datetime_utc: String
+  parking_spaces: Int  @aws_api_key
+  air_pollution: Float @aws_api_key
+  photovoltaic: Float @aws_api_key
+  biogas: Float @aws_api_key
+  datetime_utc: String @aws_api_key
 }
 
 #   A type for paging when querying too many Cities
-type CityConnection @aws_iam @aws_oidc {
+type CityConnection @aws_iam @aws_oidc @aws_api_key {
   #   The City items
-  items: [City]
+  items: [City] @aws_api_key
   #   A token to fetch next elements
-  nextToken: String
+  nextToken: String @aws_api_key
 }
 
 input CityFilterInput {

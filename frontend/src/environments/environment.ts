@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ISSUER: 'https://adidas.okta.com/oauth2/0oaef234qMqtQnSeo696',
+  ISSUER: 'https://trial-4228776.okta.com/oauth2/default',
   REDIRECT_URI: 'http://localhost:4200/',
   BASE_API_URL: 'http://localhost:8080/dev/'
 };

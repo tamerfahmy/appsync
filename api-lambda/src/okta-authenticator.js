@@ -51,10 +51,11 @@ function isValidAud(decodedToken) {
 
 function isExpired(decodedToken) {
     if (decodedToken && decodedToken.exp) {
-        return Date.now() >= decodedToken.exp * 10000;
+        console.log(decodedToken.exp);
+        return new Date().getMilliseconds() >= decodedToken.exp;
     } else {
         console.log('token had expired!');
-        return false;
+        return true;
     }
 }
 

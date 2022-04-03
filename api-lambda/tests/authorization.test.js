@@ -11,10 +11,10 @@ it('should return 401 when requesting config route without authorization header'
 });
 
 it('should return 200 when valid token is passed', async () => {
-    process.env.AppInfo = 'https://adidas.okta.com';
+    process.env.AppInfo = 'https://trial-4228776.okta.com';
     process.env.Audience = 'sample audience';
 
-    const token = jwt.sign({ exp: (Date.now() / 1000) + (60 * 60), iss: 'https://adidas.okta.com', aud: 'sample audience' }, 'any key');
+    const token = jwt.sign({ exp: (Date.now() / 1000) + (60 * 60), iss: 'https://trial-4228776.okta.com', aud: 'sample audience' }, 'any key');
     const authorization = `Bearer ${token}`;
 
     await request(app).get(configRoute)
@@ -32,7 +32,7 @@ it('should return 500 when invalid token is passed', async () => {
 });
 
 it('should return 401 when token with invalid issuer is passed', async () => {
-    process.env.AppInfo = 'https://adidas.okta.com';
+    process.env.AppInfo = 'https://trial-4228776.okta.com';
     process.env.Audience = 'sample audience';
 
     const token = jwt.sign({ exp: (Date.now() / 1000) + (60 * 60), iss: 'invalid issuer', aud: 'sample audience' }, 'any key');
@@ -44,10 +44,10 @@ it('should return 401 when token with invalid issuer is passed', async () => {
 });
 
 it('should return 401 when token with invalid audience is passed', async () => {
-    process.env.AppInfo = 'https://adidas.okta.com';
+    process.env.AppInfo = 'https://trial-4228776.okta.com';
     process.env.Audience = 'sample audience';
 
-    const token = jwt.sign({ exp: (Date.now() / 1000) + (60 * 60), iss: 'https://adidas.okta.com', aud: 'another audience' }, 'any key');
+    const token = jwt.sign({ exp: (Date.now() / 1000) + (60 * 60), iss: 'https://trial-4228776.okta.com', aud: 'another audience' }, 'any key');
     const authorization = `Bearer ${token}`;
 
     await request(app).get(configRoute)
@@ -56,10 +56,10 @@ it('should return 401 when token with invalid audience is passed', async () => {
 });
 
 it('should return 401 when token with expired token passed', async () => {
-    process.env.AppInfo = 'https://adidas.okta.com';
+    process.env.AppInfo = 'https://trial-4228776.okta.com';
     process.env.Audience = 'sample audience';
 
-    const token = jwt.sign({ exp: (Date.now() / 1000) - (60 * 60), iss: 'https://adidas.okta.com', aud: 'sample audience' }, 'any key');
+    const token = jwt.sign({ exp: (new Date().getMilliseconds - (24 * 60 * 60 * 60 * 1000)), iss: 'https://trial-4228776.okta.com', aud: 'sample audience' }, 'any key');
     const authorization = `Bearer ${token}`;
 
     await request(app).get(configRoute)

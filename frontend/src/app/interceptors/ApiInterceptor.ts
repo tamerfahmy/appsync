@@ -9,13 +9,17 @@ export class ApiInterceptor implements HttpInterceptor {
   constructor(private userService: UserService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.startsWith('public/') || req.url.startsWith('api/')) {
+    if (req.url.startsWith('api/')) {
       const userToken = this.userService.getUserToken();
+
       const authReq = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${userToken}`
+          Authorization: `Bearer ${userToken}`,
+          "Content-Type": 'application/json',
+          'Accept': 'application/json'
         }
       });
+
       return next.handle(this.appendBaseUrl(authReq));
     }
 

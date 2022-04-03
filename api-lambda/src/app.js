@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(oktaAuth);
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV == 'development') {
     app.use(cors());
     console.log('Audience', process.env.Audience);
     console.log('APPSYNC_URL', process.env.APPSYNC_URL);
