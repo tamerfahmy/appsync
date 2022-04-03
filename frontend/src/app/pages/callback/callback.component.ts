@@ -14,5 +14,4 @@ export class CallbackComponent implements OnInit {
     // Handles the response from Okta and parses tokens
     this.okta.handleAuthentication();
   }
-
 }

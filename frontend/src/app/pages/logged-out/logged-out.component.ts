@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OktaAuthService } from 'src/app/services/okta-auth.service';
 
 @Component({
@@ -7,10 +8,19 @@ import { OktaAuthService } from 'src/app/services/okta-auth.service';
   styleUrls: ['./logged-out.component.scss']
 })
 export class LoggedOutComponent implements OnInit {
-  constructor(private okta: OktaAuthService) {
+  isAuthenticated: boolean = false;
+  constructor(public oktaAuth: OktaAuthService, private router: Router) {
 
   }
 
   ngOnInit(): void {
+    this.oktaAuth.$isAuthenticated.subscribe(val => {
+      this.isAuthenticated = val;
+      if(this.isAuthenticated) {
+        this.router.navigate(['/overview']);
+      } else {
+        this.router.navigate(['/login']);
+      }
+    });
   }
 }

@@ -14,7 +14,7 @@ export class OktaAuthService {
 
   oktaAuth = new OktaAuth({
     clientId: '0oapppxxlHhGzUb8n696',
-    issuer: 'https://trial-4228776.okta.com/oauth2/default',
+    issuer: environment.ISSUER,
     redirectUri: this.LOGIN_REDIRECT_URI,
     pkce: true
   });
@@ -27,7 +27,6 @@ export class OktaAuthService {
       this.observer = observer;
       this.isAuthenticated().then(async val => {
         await this.getIdToken().then(token => {
-          console.log(token)
           this.userService.userToken = token.idToken;
         });
         observer.next(val);
@@ -73,9 +72,13 @@ export class OktaAuthService {
     this.router.navigateByUrl(url);
   }
 
-  async logout() {
-    await this.oktaAuth.signOut({
-      postLogoutRedirectUri: this.LOGOUT_REDIRECT_URI
+  logout() {
+    console.log('logging out')
+    this.oktaAuth.signOut({
+      postLogoutRedirectUri: this.LOGOUT_REDIRECT_URI,
+      clearTokensBeforeRedirect: true,
+      revokeAccessToken: true
+
     });
   }
 }

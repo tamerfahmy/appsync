@@ -3,8 +3,6 @@
     <div class="appWrapper__regions has-appBar appWrapper__regions--pushLayout">
       <section class="mainRegion">
         <div id="main" class="mdsp mdsp-defaults forcecontainer">
-          <button *ngIf="!isAuthenticated" (click)="oktaAuth.login('/')"> Login </button>
-          <button *ngIf="isAuthenticated" (click)="oktaAuth.logout()"> Logout </button>
           <router-outlet></router-outlet>
         </div>
       </section>

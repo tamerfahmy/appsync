@@ -10,6 +10,7 @@ import { BackendService } from './backend.service';
 import { NotificationService } from './notification.service';
 import { UserService } from './user.service';
 import { AWS_REGION } from '../core/Constants';
+import { OktaAuthService } from './okta-auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AppSyncService {
   private appSyncURL: string | undefined;
 
   constructor(private backendService: BackendService, private notificationService: NotificationService,
-    private userService: UserService) { }
+    private userService: UserService, private oktaAuth: OktaAuthService) { }
 
   /**
    * Execute appSync Queries
@@ -66,15 +67,16 @@ export class AppSyncService {
   getClient(): Promise<AWSAppSyncClient<NormalizedCacheObject>> {
     return new Promise(resolve => {
       if (this.appSyncURL) {
-        console.log(this.userService.getUserToken());
         const hClient = this.initAppSyncClient(this.appSyncURL, this.userService.getUserToken()).hydrated();
         resolve(hClient);
       }
       else {
-        this.backendService.getAppConfig().subscribe((config: AppConfig) => {
-          this.appSyncURL = config.appsyncURL;
-          const hClient = this.initAppSyncClient(this.appSyncURL, this.userService.getUserToken()).hydrated();
-          resolve(hClient);
+        this.oktaAuth.$isAuthenticated.subscribe(()=> {
+          this.backendService.getAppConfig().subscribe((config: AppConfig) => {
+            this.appSyncURL = config.appsyncURL;
+            const hClient = this.initAppSyncClient(this.appSyncURL, this.userService.getUserToken()).hydrated();
+            resolve(hClient);
+          });
         });
       }
     });

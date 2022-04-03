@@ -1,1 +1,8 @@
-logged-out works
+<div class="row outer" style="text-align: center; min-height: 200px;">
+  <div class="col-12 middle">
+    Welcome to Smart City Management
+    <br>
+    <a href="#" *ngIf="!isAuthenticated" (click)="oktaAuth.login('/')"> Login </a>
+    <a href="#" *ngIf="isAuthenticated" (click)="oktaAuth.logout()"> Logout </a>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import { OverviewService } from './overview.service';
 import { City } from 'src/app/models/City';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
+import { OktaAuthService } from 'src/app/services/okta-auth.service';
 
 @Component({
   selector: 'app-overview',
@@ -31,7 +32,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   interval: any;
 
-  constructor(private overviewService: OverviewService, private notificationService: NotificationService) {
+  constructor(private overviewService: OverviewService, private notificationService: NotificationService, public oktaAuth: OktaAuthService) {
 
    }
 

@@ -18,6 +18,7 @@ import { CallbackComponent } from './pages/callback/callback.component';
 import { OktaAuthService } from './services/okta-auth.service';
 import { ApiInterceptor } from './interceptors/ApiInterceptor';
 import { UserService } from './services/user.service';
+import { LogoutComponent } from './pages/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { UserService } from './services/user.service';
     LoggedOutComponent,
     NotFoundComponent,
     CallbackComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
