@@ -1,5 +1,5 @@
 # Stage 1
-FROM docker.siemens.com/evo-uk-digital-cloud-projects/incident-management/node-chrome as build-step
+FROM node:12 as build-step
 RUN mkdir -p /app
 COPY ./frontend/. /app/frontend/.
 COPY ./.git/. /app/.git/.
